@@ -1,7 +1,8 @@
 import { useCallback, useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { siteContent, type DomainItem } from '../../data/content';
-import { Icon, resolveToolIcon } from '../Icon';
+import { Icon } from '../Icon';
+import { resolveToolIcon } from '../iconTypes';
 import { DomainIcon } from './DomainIcon';
 
 interface SingularityDropProps {

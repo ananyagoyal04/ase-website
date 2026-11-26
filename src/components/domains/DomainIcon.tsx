@@ -1,5 +1,6 @@
 import { siteContent } from '../../data/content';
-import { Icon, type IconName } from '../Icon';
+import { Icon } from '../Icon';
+import type { IconName } from '../iconTypes';
 
 interface DomainIconProps {
   domainId: string;

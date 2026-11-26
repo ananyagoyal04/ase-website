@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import { siteContent, type DomainItem } from '../../data/content';
-import { Icon, resolveToolIcon } from '../Icon';
+import { Icon } from '../Icon';
+import { resolveToolIcon } from '../iconTypes';
 import { DomainIcon } from './DomainIcon';
 
 interface DomainMapProps {

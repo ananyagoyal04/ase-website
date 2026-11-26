@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import { lazy } from 'react';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { PageMeta } from './components/PageMeta';
@@ -13,20 +13,11 @@ const Collaborate = lazy(() => import('./pages/Collaborate'));
 const Contact = lazy(() => import('./pages/Contact'));
 const NotFound = lazy(() => import('./pages/NotFound'));
 
-function RouteFallback() {
-  return (
-    <div className="ase-container py-28">
-      <div className="h-6 w-40 rounded bg-[#111419] border border-[#C5CBD3]/15" />
-    </div>
-  );
-}
-
 export function App() {
   return (
     <BrowserRouter>
-      <Suspense fallback={<RouteFallback />}>
-        <Routes>
-          <Route element={<Layout />}>
+      <Routes>
+        <Route element={<Layout />}>
             <Route
               path="/"
               element={
@@ -137,7 +128,6 @@ export function App() {
             />
           </Route>
         </Routes>
-      </Suspense>
     </BrowserRouter>
   );
 }

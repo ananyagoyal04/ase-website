@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { Component, Suspense, useEffect, useRef, useState, type ReactNode } from 'react';
 import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import Lenis from 'lenis';
@@ -6,6 +6,47 @@ import { siteContent } from '../data/content';
 import { BackgroundVideo } from './BackgroundVideo';
 import { Icon } from './Icon';
 import { ScrollProgress } from './ScrollProgress';
+
+class RouteErrorBoundary extends Component<
+  { children: ReactNode },
+  { hasError: boolean }
+> {
+  state = { hasError: false };
+
+  static getDerivedStateFromError() {
+    return { hasError: true };
+  }
+
+  render() {
+    if (this.state.hasError) {
+      return (
+        <div className="ase-container py-24">
+          <div className="metal-card rounded-lg p-8 max-w-xl space-y-4">
+            <h1 className="type-h2 text-[#F5F6F8]">Unable to load this view</h1>
+            <p className="type-body text-[#C5CBD3]">
+              Please refresh the page or return to the home view.
+            </p>
+            <a
+              href="/"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded text-sm font-bold bg-[#C8102E] text-[#F5F6F8]"
+            >
+              Reload Home
+            </a>
+          </div>
+        </div>
+      );
+    }
+    return this.props.children;
+  }
+}
+
+function RouteFallback() {
+  return (
+    <div className="ase-container py-28">
+      <div className="h-6 w-40 rounded bg-[#111419]/80 border border-[#C5CBD3]/20" />
+    </div>
+  );
+}
 
 export function Layout() {
   const location = useLocation();
@@ -216,19 +257,20 @@ export function Layout() {
         </AnimatePresence>
       </header>
 
-      {/* Main Content with Animated Page Transitions */}
+      {/* Main Content with Animated Page Transitions (Suspense inside Layout keeps video persistent) */}
       <main id="main-content" className="flex-1 pt-16">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={location.pathname}
-            initial={prefersReducedMotion ? false : { opacity: 0, y: 8 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={prefersReducedMotion ? undefined : { opacity: 0, y: -6 }}
-            transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <Outlet />
-          </motion.div>
-        </AnimatePresence>
+        <RouteErrorBoundary key={location.pathname}>
+          <Suspense fallback={<RouteFallback />}>
+            <motion.div
+              key={location.pathname}
+              initial={prefersReducedMotion ? false : { opacity: 0, y: 8 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <Outlet />
+            </motion.div>
+          </Suspense>
+        </RouteErrorBoundary>
       </main>
 
       {/* Footer */}

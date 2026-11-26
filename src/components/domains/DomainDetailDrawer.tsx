@@ -2,7 +2,8 @@ import { useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import type { DomainItem } from '../../data/content';
-import { Icon, resolveToolIcon } from '../Icon';
+import { Icon } from '../Icon';
+import { resolveToolIcon } from '../iconTypes';
 import { DomainIcon } from './DomainIcon';
 
 interface DomainDetailDrawerProps {

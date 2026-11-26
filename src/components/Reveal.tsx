@@ -33,7 +33,7 @@ export function Reveal({
     <motion.div
       initial={{ opacity: 0, x: offset.x, y: offset.y }}
       whileInView={{ opacity: 1, x: 0, y: 0 }}
-      viewport={{ once: true, amount: 0.16 }}
+      viewport={{ once: true, amount: 0.01 }}
       transition={{
         duration: 0.6,
         delay,

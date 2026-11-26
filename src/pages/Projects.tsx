@@ -2,7 +2,8 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 import { AnimatePresence, LayoutGroup, motion, useReducedMotion } from 'motion/react';
 import { siteContent, type ProjectItem } from '../data/content';
-import { Icon, resolveToolIcon } from '../components/Icon';
+import { Icon } from '../components/Icon';
+import { resolveToolIcon } from '../components/iconTypes';
 import { Reveal } from '../components/Reveal';
 
 export default function Projects() {

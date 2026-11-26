@@ -1,4 +1,4 @@
-import type { IconName } from '../components/Icon';
+import type { IconName } from '../components/iconTypes';
 
 export interface NavItem {
   label: string;
