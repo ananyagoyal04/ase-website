@@ -1,0 +1,196 @@
+@import "tailwindcss";
+
+@theme {
+  --color-obsidian: #07090C;
+  --color-graphite: #111419;
+  --color-graphite-elevated: #171B22;
+  --color-titanium: #C5CBD3;
+  --color-white: #F5F6F8;
+  --color-steel: #8E929B;
+  --color-crimson: #C8102E;
+  --color-crimson-hover: #A80D26;
+
+  --font-display: "Space Grotesk", ui-sans-serif, system-ui, sans-serif;
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, monospace;
+}
+
+@layer base {
+  :root {
+    color-scheme: dark;
+    --bg-obsidian: #07090C;
+    --bg-graphite: #111419;
+    --text-white: #F5F6F8;
+    --text-steel: #8E929B;
+    --border-titanium: #C5CBD3;
+    --accent-crimson: #C8102E;
+  }
+
+  html {
+    background-color: var(--bg-obsidian);
+    color: var(--text-white);
+    font-family: var(--font-sans);
+    scroll-behavior: auto;
+    overflow-x: clip;
+  }
+
+  body {
+    background-color: var(--bg-obsidian);
+    color: var(--text-white);
+    min-height: 100dvh;
+    overflow-x: clip;
+    line-height: 1.6;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-display);
+    color: var(--text-white);
+    text-wrap: balance;
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--accent-crimson);
+    outline-offset: 3px;
+    border-radius: 2px;
+  }
+}
+
+/* Fluid Typography Scale */
+.type-hero {
+  font-family: var(--font-display);
+  font-size: clamp(2.35rem, 5.2vw + 0.75rem, 4.5rem);
+  font-weight: 700;
+  line-height: 1.06;
+  letter-spacing: -0.025em;
+}
+
+.type-h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 3.6vw + 0.65rem, 3.25rem);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+}
+
+.type-h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 2.2vw + 0.55rem, 2.25rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.015em;
+}
+
+.type-h3 {
+  font-family: var(--font-display);
+  font-size: clamp(1.15rem, 1.1vw + 0.75rem, 1.45rem);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.type-body-lg {
+  font-family: var(--font-sans);
+  font-size: clamp(1rem, 0.35vw + 0.9rem, 1.15rem);
+  line-height: 1.65;
+}
+
+.type-body {
+  font-family: var(--font-sans);
+  font-size: clamp(0.9375rem, 0.2vw + 0.88rem, 1rem);
+  line-height: 1.6;
+}
+
+.type-mono {
+  font-family: var(--font-mono);
+  font-size: clamp(0.7rem, 0.15vw + 0.68rem, 0.78rem);
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* Precision Container (12-column max 1200px) */
+.ase-container {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 2.5rem);
+}
+
+/* Subtle Brushed Titanium Texture on Large Surfaces */
+.surface-brushed {
+  background-color: #111419;
+  background-image: repeating-linear-gradient(
+    90deg,
+    rgba(197, 203, 211, 0.015) 0px,
+    rgba(197, 203, 211, 0.015) 1px,
+    transparent 1px,
+    transparent 3px
+  );
+}
+
+/* 1px Titanium Gradient Border Card + Hover Light Sweep */
+.metal-card {
+  position: relative;
+  background-color: #111419;
+  border: 1px solid rgba(197, 203, 211, 0.16);
+  background-image:
+    linear-gradient(145deg, rgba(197, 203, 211, 0.04) 0%, rgba(17, 20, 25, 0) 45%),
+    repeating-linear-gradient(
+      90deg,
+      rgba(197, 203, 211, 0.012) 0px,
+      rgba(197, 203, 211, 0.012) 1px,
+      transparent 1px,
+      transparent 4px
+    );
+  overflow: hidden;
+  transition: border-color 260ms ease-out, background-color 260ms ease-out;
+}
+
+.metal-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 20%,
+    rgba(197, 203, 211, 0.07) 48%,
+    rgba(245, 246, 248, 0.1) 50%,
+    rgba(197, 203, 211, 0.07) 52%,
+    transparent 80%
+  );
+  transform: translateX(-120%);
+  transition: transform 650ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.metal-card:hover {
+  border-color: rgba(197, 203, 211, 0.36);
+}
+
+.metal-card:hover::before {
+  transform: translateX(120%);
+}
+
+/* Hairline Titanium Gradient Divider */
+.hairline-titanium {
+  height: 1px;
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(197, 203, 211, 0.28) 20%,
+    rgba(197, 203, 211, 0.28) 80%,
+    transparent 100%
+  );
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .metal-card::before {
+    display: none;
+  }
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+  }
+}

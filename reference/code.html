@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+
+<html class="dark" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/>
+<meta content="mobile_tab" name="shell-type"/>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=JetBrains+Mono:wght@400;500;600&amp;family=Sora:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+    @layer base {
+      html, body {
+        width: 100vw;
+        margin: 0;
+        padding: 0;
+        background-color: #121316;
+        color: #e3e2e5;
+        font-family: 'Sora', sans-serif;
+      }
+      body {
+        overscroll-behavior: none;
+      }
+      .pb-safe {
+        padding-bottom: env(safe-area-inset-bottom, 0px);
+      }
+      .pt-safe {
+        padding-top: env(safe-area-inset-top, 0px);
+      }
+      main > :first-child {
+        margin-top: 0 !important;
+      }
+      main > :last-child {
+        margin-bottom: 0 !important;
+      }
+    }
+    ::-webkit-scrollbar {
+      display: none;
+    }
+  </style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          colors: {
+            "on-surface": "#e3e2e5",
+            "primary-container": "#ff5356",
+            "outline": "#ae8785",
+            "on-tertiary": "#2c3136",
+            "inverse-primary": "#bf0022",
+            "on-secondary": "#68000d",
+            "secondary-container": "#a8021d",
+            "surface-container-low": "#1a1c1e",
+            "on-primary-fixed": "#410005",
+            "tertiary": "#c3c7ce",
+            "background": "#121316",
+            "surface-container-high": "#292a2d",
+            "secondary-fixed": "#ffdad7",
+            "on-tertiary-container": "#252a2f",
+            "primary-fixed-dim": "#ffb3af",
+            "on-error-container": "#ffdad6",
+            "inverse-on-surface": "#2f3033",
+            "on-tertiary-fixed-variant": "#42474d",
+            "surface-bright": "#38393c",
+            "tertiary-container": "#8d9198",
+            "primary-fixed": "#ffdad7",
+            "on-primary-container": "#5c000b",
+            "primary": "#ffb3af",
+            "on-secondary-container": "#ffb3ae",
+            "on-error": "#690005",
+            "on-tertiary-fixed": "#171c21",
+            "secondary": "#ffb3af",
+            "on-primary": "#68000e",
+            "on-surface-variant": "#e8bcb9",
+            "surface-tint": "#ffb3af",
+            "outline-variant": "#5e3f3d",
+            "secondary-fixed-dim": "#ffb3af",
+            "surface-container": "#1e2022",
+            "surface-dim": "#121316",
+            "surface": "#121316",
+            "on-primary-fixed-variant": "#930018",
+            "on-background": "#e3e2e5",
+            "surface-variant": "#343538",
+            "inverse-surface": "#e3e2e5",
+            "error-container": "#93000a",
+            "tertiary-fixed-dim": "#c3c7ce",
+            "surface-container-highest": "#343538",
+            "surface-container-lowest": "#0d0e11",
+            "tertiary-fixed": "#dfe3ea",
+            "error": "#ffb4ab",
+            "on-secondary-fixed": "#410005",
+            "on-secondary-fixed-variant": "#930017"
+          },
+          borderRadius: {
+            "DEFAULT": "0.25rem",
+            "lg": "0.5rem",
+            "xl": "0.75rem",
+            "2xl": "1rem",
+            "full": "9999px"
+          },
+          spacing: {
+            "gutter": "1.5rem",
+            "margin-mobile": "1.25rem",
+            "space-xs": "0.25rem",
+            "gutter-mobile": "1rem",
+            "space-3xl": "6rem",
+            "margin": "4rem",
+            "space-2xl": "4rem",
+            "space-md": "1rem",
+            "space-sm": "0.5rem",
+            "space-lg": "1.5rem",
+            "space-xl": "2.5rem"
+          },
+          fontFamily: {
+            sans: ["Sora", "sans-serif"],
+            mono: ["JetBrains Mono", "monospace"]
+          }
+        }
+      }
+    };
+  </script>
+</head>
+<body class="bg-surface font-sans text-on-surface flex flex-col min-h-screen">
+<!-- Header Bar -->
+<header class="fixed top-0 w-full z-50 pt-safe bg-surface/80 backdrop-blur-xl border-b border-surface-container-highest/40 shadow-[0_1px_12px_rgba(255,83,86,0.06)]">
+<div class="h-16 px-gutter-mobile flex items-center justify-between">
+<a class="flex items-center gap-2.5" data-path="home" href="#">
+<div class="relative flex items-center justify-center">
+<img alt="ASE NMIT" class="w-8 h-8 rounded-full object-cover border border-outline-variant/40" src="https://lh3.googleusercontent.com/aida/ALJJyrCjyEU_7kOeydcrR5G5oaXxN941NxzAhfbGUgZt58pKzup8owvyhfY7f2afnfGPSLsDUKESJ8mGPpJLb2gyfAtswJ_Sa8DCiF3bS8lLiP3EDFtsxo2kSwKvoIXidXZY1jngd-ixcVSkRKcI7OKBg6ZDTMHYB32G5Pl4SlLjhv59kmoQLF_Rpw7YFwfj-JbKGbFGhb2DEP5b_DBjtE44UeM50vEOvv58BZqYmbfjVqY"/>
+<span class="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-primary-container shadow-[0_0_8px_#ff5356]"></span>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-semibold tracking-wide text-on-surface leading-tight">ASE NMIT</span>
+<span class="font-mono text-[10px] text-tertiary tracking-wider uppercase">ADVANCED SE</span>
+</div>
+</a>
+<div class="flex items-center gap-2">
+<a class="flex items-center justify-center px-3.5 py-1.5 rounded-lg bg-surface-container-high border border-outline-variant/40 text-on-surface hover:border-outline text-xs font-medium tracking-wide transition-colors" data-path="contact" href="#">CONNECT</a>
+<a aria-label="Explore menu" class="w-10 h-10 flex items-center justify-center rounded-lg text-tertiary hover:text-on-surface hover:bg-surface-container-high transition-colors" data-path="about" href="#">
+<span class="material-symbols-outlined text-[20px]">grid_view</span>
+</a>
+</div>
+</div>
+</header>
+<!-- Main Content Area -->
+<main class="flex flex-col relative w-full pt-16 pb-20 bg-surface flex-grow">
+<div class="flex flex-col w-full text-on-surface">
+<!-- Hero Section -->
+<section class="relative w-full px-gutter-mobile pt-space-lg pb-space-2xl flex flex-col gap-space-lg">
+<!-- Ambient Radial Glow -->
+<div class="absolute -top-12 left-1/2 -translate-x-1/2 w-96 h-96 rounded-full bg-primary-container/10 blur-[120px] pointer-events-none -z-10"></div>
+<!-- Clean Eyebrow -->
+<div class="flex items-center">
+<div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-high/90 border border-outline-variant/30">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container animate-pulse shadow-[0_0_8px_#ff5356]"></span>
+<span class="font-mono text-[11px] uppercase tracking-wider text-tertiary font-medium">ADVANCED SOFTWARE ENGINEERING · NMIT</span>
+</div>
+</div>
+<!-- Editorial Main Headline -->
+<div class="flex flex-col mt-1">
+<h1 class="text-3xl sm:text-4xl font-bold tracking-tight text-on-surface leading-[1.15]">
+<span class="block bg-gradient-to-r from-white via-zinc-200 to-zinc-400 bg-clip-text text-transparent">We imagine.</span>
+<span class="block bg-gradient-to-r from-zinc-100 via-zinc-300 to-zinc-400 bg-clip-text text-transparent">We engineer.</span>
+<span class="block bg-gradient-to-r from-[#ff5356] via-[#ff7a7c] to-[#ffb3af] bg-clip-text text-transparent drop-shadow-[0_2px_18px_rgba(255,83,86,0.35)]">We build what's next.</span>
+</h1>
+<p class="text-sm sm:text-base text-tertiary mt-3 leading-relaxed max-w-md font-normal">
+            ASE is a community of curious minds, software engineers, and innovators at NMIT Bengaluru. We bring people together to explore technology, build meaningful projects, and turn ambitious ideas into reality.
+          </p>
+</div>
+<!-- Action Buttons -->
+<div class="flex flex-col sm:flex-row gap-2.5 pt-1">
+<a class="flex items-center justify-between w-full h-12 px-space-md rounded-xl bg-gradient-to-r from-secondary-container via-primary-container to-[#ff6b6e] text-white font-medium text-sm tracking-wide shadow-[0_0_24px_rgba(255,83,86,0.35)] active:scale-[0.98] transition-transform" data-path="events" href="#">
+<span class="font-semibold">Explore Events</span>
+<span class="material-symbols-outlined text-[19px]">arrow_forward</span>
+</a>
+<a class="flex items-center justify-between w-full h-12 px-space-md rounded-xl bg-surface-container-high/80 hover:bg-surface-bright text-on-surface border border-white/10 hover:border-white/20 font-medium text-sm tracking-wide active:scale-[0.98] transition-all" data-path="about" href="#">
+<span class="text-tertiary-fixed">Discover ASE</span>
+<span class="text-tertiary font-mono text-xs">↗</span>
+</a>
+</div>
+<!-- Interactive 3D Centerpiece -->
+<div class="relative w-full rounded-2xl bg-gradient-to-b from-surface-container-low/60 to-surface-container-lowest border border-outline-variant/30 overflow-hidden shadow-2xl p-1">
+<div class="absolute top-3 left-3 z-20 flex items-center gap-2 px-2.5 py-1 rounded-full bg-surface-container-lowest/80 backdrop-blur-md border border-white/5">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+<span class="font-mono text-[10px] text-tertiary uppercase tracking-wider">ASE COMPUTATIONAL CORE</span>
+</div>
+<div class="absolute top-3 right-3 z-20 flex items-center">
+<span class="font-mono text-[10px] text-tertiary/70 tracking-wider">3D INTERACTIVE</span>
+</div>
+<!-- STITCH_THREEJS_START:ANIMATION_18 class="w-full h-80 rounded-2xl relative z-10 bg-transparent" -->
+<div class="w-full h-80 rounded-2xl relative z-10 bg-transparent" style="display:block;">
+<script src="https://ajax.googleapis.com/ajax/libs/threejs/r125/three.min.js"></script>
+<div id="threejs-container-ANIMATION_18" style="width:100%;height:100%"></div>
+<script>
+(function() {
+  const container = document.getElementById('threejs-container-ANIMATION_18');
+  const devicePixelRatio = window.devicePixelRatio || 1;
+  const width = container.clientWidth || window.innerWidth;
+const height = container.clientHeight || window.innerHeight;
+
+const scene = new THREE.Scene();
+const camera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+camera.position.set(0, 0, 8.5);
+
+const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+renderer.setSize(width, height);
+renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+container.appendChild(renderer.domElement);
+
+// Lighting
+const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+scene.add(ambientLight);
+
+const redCoreLight = new THREE.PointLight(0xff263b, 5, 20);
+redCoreLight.position.set(0, 0, 0);
+scene.add(redCoreLight);
+
+const crimsonRimLight = new THREE.DirectionalLight(0xb51224, 2.5);
+crimsonRimLight.position.set(-5, 6, -3);
+scene.add(crimsonRimLight);
+
+const silverRimLight = new THREE.DirectionalLight(0xc7cbd2, 3.0);
+silverRimLight.position.set(6, -4, 5);
+scene.add(silverRimLight);
+
+// Group to hold all central elements
+const mainGroup = new THREE.Group();
+scene.add(mainGroup);
+
+// 1. Inner Metallic Core Cube
+const coreGeom = new THREE.BoxGeometry(1.6, 1.6, 1.6);
+const coreMat = new THREE.MeshPhongMaterial({
+  color: 0x16181d,
+  specular: 0xff3344,
+  shininess: 90,
+  emissive: 0x220508
+});
+const coreMesh = new THREE.Mesh(coreGeom, coreMat);
+mainGroup.add(coreMesh);
+
+// Metallic Core Edge Frames
+const coreEdgesGeom = new THREE.EdgesGeometry(coreGeom);
+const coreEdgesMat = new THREE.LineBasicMaterial({ color: 0xff263b, linewidth: 2 });
+const coreEdges = new THREE.LineSegments(coreEdgesGeom, coreEdgesMat);
+mainGroup.add(coreEdges);
+
+// Center glowing crimson sphere (photon emitter)
+const sphereGeom = new THREE.SphereGeometry(0.55, 32, 32);
+const sphereMat = new THREE.MeshBasicMaterial({ color: 0xff3b4e });
+const photonSphere = new THREE.Mesh(sphereGeom, sphereMat);
+mainGroup.add(photonSphere);
+
+// Internal Octahedron Lattice
+const octaGeom = new THREE.OctahedronGeometry(1.1, 0);
+const octaEdges = new THREE.EdgesGeometry(octaGeom);
+const octaLineMat = new THREE.LineBasicMaterial({ color: 0xc7cbd2, transparent: true, opacity: 0.8 });
+const octaLines = new THREE.LineSegments(octaEdges, octaLineMat);
+mainGroup.add(octaLines);
+
+// 2. Outer Transparent Glass Cube
+const outerGeom = new THREE.BoxGeometry(3.2, 3.2, 3.2);
+const outerMat = new THREE.MeshPhysicalMaterial({
+  color: 0xffffff,
+  metalness: 0.1,
+  roughness: 0.05,
+  transmission: 0.92,
+  transparent: true,
+  opacity: 0.45,
+  reflectivity: 0.9,
+  clearcoat: 1.0,
+  clearcoatRoughness: 0.1
+});
+const outerCube = new THREE.Mesh(outerGeom, outerMat);
+mainGroup.add(outerCube);
+
+// Outer Precision Beveled Wireframe
+const outerEdgesGeom = new THREE.EdgesGeometry(outerGeom);
+const outerEdgesMat = new THREE.LineBasicMaterial({ color: 0xc7cbd2, transparent: true, opacity: 0.85 });
+const outerEdges = new THREE.LineSegments(outerEdgesGeom, outerEdgesMat);
+mainGroup.add(outerEdges);
+
+// 3. Floating Orbital Particles (Fine-tuned density & size)
+const particleCount = 180;
+const particleGeom = new THREE.BufferGeometry();
+const particlePositions = new Float32Array(particleCount * 3);
+const initialOffsets = [];
+
+for (let i = 0; i < particleCount; i++) {
+  const radius = 2.3 + Math.random() * 2.9;
+  const theta = Math.random() * Math.PI * 2;
+  const phi = Math.acos((Math.random() * 2) - 1);
+  const x = radius * Math.sin(phi) * Math.cos(theta);
+  const y = radius * Math.sin(phi) * Math.sin(theta);
+  const z = radius * Math.cos(phi);
+  particlePositions[i * 3] = x;
+  particlePositions[i * 3 + 1] = y;
+  particlePositions[i * 3 + 2] = z;
+  initialOffsets.push({ radius, theta, phi, speed: 0.18 + Math.random() * 0.35 });
+}
+
+particleGeom.setAttribute('position', new THREE.BufferAttribute(particlePositions, 3));
+const particleMat = new THREE.PointsMaterial({
+  color: 0xff4d5e,
+  size: 0.065,
+  transparent: true,
+  opacity: 0.9
+});
+const particleSystem = new THREE.Points(particleGeom, particleMat);
+mainGroup.add(particleSystem);
+
+// Cursor Interaction & Parallax
+let targetRotX = 0;
+let targetRotY = 0;
+let mouseX = 0;
+let mouseY = 0;
+
+window.addEventListener('mousemove', (e) => {
+  mouseX = (e.clientX / window.innerWidth - 0.5) * 2;
+  mouseY = (e.clientY / window.innerHeight - 0.5) * 2;
+  targetRotY = mouseX * 0.65;
+  targetRotX = mouseY * 0.65;
+});
+
+// Resize listener
+window.addEventListener('resize', () => {
+  const w = container.clientWidth || window.innerWidth;
+  const h = container.clientHeight || window.innerHeight;
+  camera.aspect = w / h;
+  camera.updateProjectionMatrix();
+  renderer.setSize(w, h);
+});
+
+// Render Loop (Fine-tuned deliberate rotation speeds)
+let clock = new THREE.Clock();
+function animate() {
+  requestAnimationFrame(animate);
+  const elapsedTime = clock.getElapsedTime();
+
+  // Floating & Gentle rotation
+  mainGroup.rotation.y += 0.0025;
+  mainGroup.rotation.x = Math.sin(elapsedTime * 0.35) * 0.08 + (targetRotX * 0.4);
+  mainGroup.rotation.z = Math.cos(elapsedTime * 0.25) * 0.05;
+  mainGroup.position.y = Math.sin(elapsedTime * 0.7) * 0.14 - (targetRotY * 0.2);
+
+  // Core counter-rotation
+  coreMesh.rotation.y -= 0.005;
+  coreMesh.rotation.x += 0.0035;
+  coreEdges.rotation.copy(coreMesh.rotation);
+  octaLines.rotation.y += 0.007;
+
+  // Pulse crimson lighting
+  const pulse = Math.sin(elapsedTime * 2.0) * 0.35 + 1.0;
+  redCoreLight.intensity = 4.0 * pulse;
+  photonSphere.scale.setScalar(0.9 + 0.12 * Math.sin(elapsedTime * 2.5));
+
+  // Particle Orbiting
+  const positions = particleGeom.attributes.position.array;
+  for (let i = 0; i < particleCount; i++) {
+    const data = initialOffsets[i];
+    data.theta += 0.003 * data.speed;
+    positions[i * 3] = data.radius * Math.sin(data.phi) * Math.cos(data.theta);
+    positions[i * 3 + 1] = data.radius * Math.sin(data.phi) * Math.sin(data.theta) + Math.sin(elapsedTime + i) * 0.07;
+    positions[i * 3 + 2] = data.radius * Math.cos(data.phi);
+  }
+  particleGeom.attributes.position.needsUpdate = true;
+
+  renderer.render(scene, camera);
+}
+animate();
+})();
+</script>
+</div>
+<!-- STITCH_THREEJS_END:ANIMATION_18 -->
+<div class="relative w-full px-space-md py-2.5 bg-surface-container-low/80 backdrop-blur-md flex items-center justify-between border-t border-white/5 rounded-b-xl">
+<span class="text-xs text-on-surface font-medium">Real-time Autonomous Prototype</span>
+<span class="font-mono text-[11px] text-primary tracking-wide">Interactive Canvas</span>
+</div>
+</div>
+</section>
+<!-- Manifesto Section -->
+<section class="w-full px-gutter-mobile py-space-xl bg-surface-container-lowest border-y border-surface-container-highest/40">
+<div class="flex items-center gap-2 mb-2">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+<span class="font-mono text-xs uppercase tracking-widest text-primary font-medium">ABOUT ASE</span>
+</div>
+<h2 class="text-2xl font-bold tracking-tight text-white leading-tight mt-2">
+          We don't just study technology.
+          <span class="block bg-gradient-to-r from-primary to-primary-container bg-clip-text text-transparent">
+            We build what comes next.
+          </span>
+</h2>
+<p class="text-sm text-tertiary mt-3 leading-relaxed">
+          At ASE, we bridge curious student builders with real engineering execution to create meaningful systems and software.
+        </p>
+<div class="pt-4">
+<a class="inline-flex items-center gap-1.5 font-mono text-xs uppercase tracking-wider text-primary hover:text-white transition-colors" data-path="about" href="#">
+<span>Discover ASE</span>
+<span class="text-sm font-sans">↗</span>
+</a>
+</div>
+</section>
+<!-- Highlights / Impact Section -->
+<section class="w-full px-gutter-mobile py-space-xl bg-surface">
+<div class="flex items-center justify-between mb-space-md">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+<span class="font-mono text-xs uppercase tracking-widest text-tertiary font-medium">HIGHLIGHTS</span>
+</div>
+<span class="font-mono text-[11px] text-primary">COMMUNITY IMPACT</span>
+</div>
+<!-- 2x2 Metric Matrix -->
+<div class="grid grid-cols-2 gap-space-sm">
+<!-- Metric 01 -->
+<div class="p-space-md rounded-xl bg-surface-container-low border border-outline-variant/20 flex flex-col justify-between shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-mono text-[10px] text-tertiary">01</span>
+<span class="w-1 h-1 rounded-full bg-primary-container/80"></span>
+</div>
+<div class="mt-4">
+<div class="text-3xl font-bold tracking-tight bg-gradient-to-br from-white via-zinc-200 to-zinc-400 bg-clip-text text-transparent">[500]+</div>
+<div class="text-xs text-tertiary mt-1 font-medium">Members</div>
+</div>
+</div>
+<!-- Metric 02 -->
+<div class="p-space-md rounded-xl bg-surface-container-low border border-outline-variant/20 flex flex-col justify-between shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-mono text-[10px] text-tertiary">02</span>
+<span class="w-1 h-1 rounded-full bg-primary-container/80"></span>
+</div>
+<div class="mt-4">
+<div class="text-3xl font-bold tracking-tight bg-gradient-to-br from-white via-zinc-200 to-zinc-400 bg-clip-text text-transparent">[24]+</div>
+<div class="text-xs text-tertiary mt-1 font-medium">Events &amp; Initiatives</div>
+</div>
+</div>
+<!-- Metric 03 -->
+<div class="p-space-md rounded-xl bg-surface-container-low border border-outline-variant/20 flex flex-col justify-between shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-mono text-[10px] text-tertiary">03</span>
+<span class="w-1 h-1 rounded-full bg-primary-container/80"></span>
+</div>
+<div class="mt-4">
+<div class="text-3xl font-bold tracking-tight bg-gradient-to-br from-white via-zinc-200 to-zinc-400 bg-clip-text text-transparent">[40]+</div>
+<div class="text-xs text-tertiary mt-1 font-medium">Projects</div>
+</div>
+</div>
+<!-- Metric 04 -->
+<div class="p-space-md rounded-xl bg-surface-container-low border border-outline-variant/20 flex flex-col justify-between shadow-sm">
+<div class="flex items-center justify-between">
+<span class="font-mono text-[10px] text-tertiary">04</span>
+<span class="w-1 h-1 rounded-full bg-primary-container/80"></span>
+</div>
+<div class="mt-4">
+<div class="text-3xl font-bold tracking-tight bg-gradient-to-br from-white via-zinc-200 to-zinc-400 bg-clip-text text-transparent">[12]+</div>
+<div class="text-xs text-tertiary mt-1 font-medium">Collaborations</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Community Photograph Section -->
+<section class="w-full px-gutter-mobile py-space-xl bg-surface-container-lowest border-y border-surface-container-highest/40">
+<div class="flex items-center justify-between mb-space-sm">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px] text-primary">diversity_3</span>
+<span class="font-mono text-xs uppercase tracking-widest text-tertiary font-medium">COMMUNITY</span>
+</div>
+<span class="font-mono text-[11px] text-tertiary">COHORT 2025</span>
+</div>
+<!-- Clean metallic glass placeholder container -->
+<div class="relative w-full rounded-2xl bg-surface-container-low border border-outline-variant/30 p-space-lg overflow-hidden flex flex-col items-center justify-center min-h-[220px] shadow-lg text-center backdrop-blur-md">
+<div class="absolute -top-10 -right-10 w-44 h-44 bg-primary-container/10 rounded-full blur-2xl pointer-events-none"></div>
+<div class="relative z-10 flex flex-col items-center gap-2">
+<span class="px-3 py-1 rounded-full bg-surface-container-high border border-outline-variant/30 text-primary font-mono text-[11px] uppercase tracking-wider">
+              ASE GROUP PHOTOGRAPH
+            </span>
+<div class="text-xl font-bold text-white tracking-tight mt-1">
+              Coming Soon
+            </div>
+<p class="text-xs text-tertiary max-w-[260px] leading-relaxed">
+              Capturing our cohort of designers, engineers, and builders.
+            </p>
+</div>
+</div>
+<p class="text-xs text-tertiary mt-3 text-center italic tracking-wide">
+          “Different minds. One engineering culture.”
+        </p>
+</section>
+<!-- Events Preview Section -->
+<section class="w-full px-gutter-mobile py-space-xl bg-surface">
+<div class="flex items-center justify-between mb-space-md">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+<span class="font-mono text-xs uppercase tracking-widest text-on-surface font-medium">OUR EVENTS</span>
+</div>
+<a class="font-mono text-xs text-primary hover:text-white transition-colors" data-path="events" href="#">View All ↗</a>
+</div>
+<div class="flex flex-col gap-space-sm">
+<!-- Card 01: iSolve 2025 -->
+<div class="w-full rounded-xl p-space-md bg-surface-container border border-primary/20 shadow-[0_0_20px_-6px_rgba(255,83,86,0.25)] flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<span class="font-mono text-[11px] text-tertiary">FLAGSHIP</span>
+<span class="px-2.5 py-0.5 rounded-full bg-secondary-container/40 text-on-secondary-container font-mono text-[10px] uppercase font-semibold">
+                PAST EVENT
+              </span>
+</div>
+<h3 class="text-lg font-bold text-on-surface mt-1">iSolve 2025</h3>
+<p class="text-xs text-tertiary leading-relaxed">
+              Explore the highlights and ideas brought to life at iSolve 2025.
+            </p>
+<div class="pt-2">
+<a class="inline-flex items-center gap-1 text-xs font-mono text-primary font-semibold hover:text-white transition-colors" data-path="events" href="#">
+<span>Explore Event</span>
+<span class="text-sm font-sans">↗</span>
+</a>
+</div>
+</div>
+<!-- Card 02: Upcoming Event 01 -->
+<div class="w-full rounded-xl p-space-md bg-surface-container-low border border-outline-variant/20 flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<span class="font-mono text-[11px] text-tertiary">ANNOUNCEMENT</span>
+<span class="px-2.5 py-0.5 rounded-full bg-surface-container border border-outline-variant/30 text-tertiary font-mono text-[10px] uppercase">
+                COMING SOON
+              </span>
+</div>
+<h3 class="text-base font-semibold text-on-surface mt-1">Upcoming Event 01</h3>
+<p class="text-xs text-tertiary leading-relaxed">
+              Our next chapter is taking shape.
+            </p>
+</div>
+<!-- Card 03: Upcoming Event 02 -->
+<div class="w-full rounded-xl p-space-md bg-surface-container-low border border-outline-variant/20 flex flex-col gap-1.5">
+<div class="flex items-center justify-between">
+<span class="font-mono text-[11px] text-tertiary">ANNOUNCEMENT</span>
+<span class="px-2.5 py-0.5 rounded-full bg-surface-container border border-outline-variant/30 text-tertiary font-mono text-[10px] uppercase">
+                COMING SOON
+              </span>
+</div>
+<h3 class="text-base font-semibold text-on-surface mt-1">Upcoming Event 02</h3>
+<p class="text-xs text-tertiary leading-relaxed">
+              More ideas, challenges, and experiences are on the way.
+            </p>
+</div>
+</div>
+</section>
+<!-- Closing Call To Action -->
+<section class="w-full px-gutter-mobile py-space-2xl bg-surface-container-lowest text-center relative overflow-hidden border-t border-surface-container-highest/40">
+<div class="absolute bottom-0 left-1/2 -translate-x-1/2 w-full h-36 bg-gradient-to-t from-primary-container/10 to-transparent pointer-events-none"></div>
+<div class="relative z-10 flex flex-col items-center">
+<span class="font-mono text-xs uppercase tracking-widest text-primary font-medium mb-2">GET IN TOUCH</span>
+<h2 class="text-2xl font-bold tracking-tight text-white max-w-xs leading-tight">
+            Built by curiosity.
+            <span class="block bg-gradient-to-r from-primary to-primary-container bg-clip-text text-transparent">
+              Defined by what we create.
+            </span>
+</h2>
+<p class="text-xs text-tertiary max-w-xs mt-2 leading-relaxed">
+            Connect with student builders, software designers, and developers at NMIT Bengaluru.
+          </p>
+<a class="mt-space-lg inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-gradient-to-r from-secondary-container via-primary-container to-[#ff6b6e] hover:opacity-95 text-white font-medium text-sm shadow-[0_0_24px_rgba(255,83,86,0.35)] transition-all active:scale-[0.98]" data-path="contact" href="#">
+<span>Connect with ASE</span>
+<span class="text-base font-sans">↗</span>
+</a>
+</div>
+</section>
+</div>
+</main>
+<!-- Clean Department Footer -->
+<footer class="w-full bg-surface-container-lowest border-t border-surface-container-highest/40 px-gutter-mobile py-space-xl flex flex-col gap-space-lg mb-20">
+<div class="flex flex-col gap-1">
+<div class="flex items-center gap-2">
+<span class="w-1.5 h-1.5 rounded-full bg-primary-container"></span>
+<span class="text-sm font-semibold tracking-wide text-on-surface">ASE Collective</span>
+</div>
+<p class="text-xs text-tertiary">Advanced Software Engineering · NMIT Bengaluru</p>
+</div>
+<div class="grid grid-cols-2 gap-space-md py-1">
+<div class="flex flex-col gap-1.5">
+<span class="font-mono text-xs text-primary uppercase tracking-wider">Navigation</span>
+<a class="text-xs text-tertiary hover:text-white py-0.5 transition-colors" data-path="home" href="#">Home</a>
+<a class="text-xs text-tertiary hover:text-white py-0.5 transition-colors" data-path="about" href="#">About</a>
+<a class="text-xs text-tertiary hover:text-white py-0.5 transition-colors" data-path="events" href="#">Events</a>
+<a class="text-xs text-tertiary hover:text-white py-0.5 transition-colors" data-path="team" href="#">Team</a>
+<a class="text-xs text-tertiary hover:text-white py-0.5 transition-colors" data-path="contact" href="#">Contact</a>
+</div>
+<div class="flex flex-col gap-1.5">
+<span class="font-mono text-xs text-primary uppercase tracking-wider">Connect</span>
+<a class="text-xs text-tertiary hover:text-white py-0.5 flex items-center justify-between" href="https://instagram.com" target="_blank">Instagram <span class="font-mono text-[10px]">↗</span></a>
+<a class="text-xs text-tertiary hover:text-white py-0.5 flex items-center justify-between" href="https://linkedin.com" target="_blank">LinkedIn <span class="font-mono text-[10px]">↗</span></a>
+<a class="text-xs text-tertiary hover:text-white py-0.5 flex items-center justify-between" href="mailto:contact@asenmit.tech">Email <span class="font-mono text-[10px]">↗</span></a>
+<a class="text-xs text-tertiary hover:text-white py-0.5 flex items-center justify-between" href="https://unstop.com" target="_blank">Unstop <span class="font-mono text-[10px]">↗</span></a>
+</div>
+</div>
+<div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 pt-2 border-t border-surface-container-highest/20">
+<span class="font-mono text-[11px] text-tertiary">© 2025 ASE NMIT. All rights reserved.</span>
+<span class="font-mono text-[11px] text-on-surface-variant">Bangalore, India</span>
+</div>
+</footer>
+<!-- Bottom Navigation Tab Bar -->
+<nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/85 backdrop-blur-xl border-t border-surface-container-highest/40 shadow-[0_-1px_16px_rgba(255,83,86,0.06)]" data-active-classes="text-primary font-semibold">
+<div class="flex items-center justify-around h-20 px-space-xs max-w-md mx-auto">
+<a aria-current="page" class="flex flex-col items-center justify-center w-14 h-14 rounded-xl transition-colors min-h-[44px] min-w-[44px] text-primary font-semibold" data-path="home" href="#">
+<span class="material-symbols-outlined text-[22px]">home</span>
+<span class="font-mono text-[10px] uppercase mt-1 tracking-wider">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center w-14 h-14 rounded-xl text-tertiary hover:text-on-surface transition-colors min-h-[44px] min-w-[44px]" data-path="about" href="#">
+<span class="material-symbols-outlined text-[22px]">info</span>
+<span class="font-mono text-[10px] uppercase mt-1 tracking-wider">About</span>
+</a>
+<a class="flex flex-col items-center justify-center w-14 h-14 rounded-xl text-tertiary hover:text-on-surface transition-colors min-h-[44px] min-w-[44px]" data-path="events" href="#">
+<span class="material-symbols-outlined text-[22px]">calendar_month</span>
+<span class="font-mono text-[10px] uppercase mt-1 tracking-wider">Events</span>
+</a>
+<a class="flex flex-col items-center justify-center w-14 h-14 rounded-xl text-tertiary hover:text-on-surface transition-colors min-h-[44px] min-w-[44px]" data-path="team" href="#">
+<span class="material-symbols-outlined text-[22px]">group</span>
+<span class="font-mono text-[10px] uppercase mt-1 tracking-wider">Team</span>
+</a>
+<a class="flex flex-col items-center justify-center w-14 h-14 rounded-xl text-tertiary hover:text-on-surface transition-colors min-h-[44px] min-w-[44px]" data-path="contact" href="#">
+<span class="material-symbols-outlined text-[22px]">mail</span>
+<span class="font-mono text-[10px] uppercase mt-1 tracking-wider">Contact</span>
+</a>
+</div>
+</nav>
+<!-- Web Component definition for threejs-scene -->
+<script>
+    if (!customElements.get('threejs-scene')) {
+      class ThreeJSScene extends HTMLElement {
+        connectedCallback() {
+          const container = this;
+          const inlineScript = container.getAttribute('src');
+          if (inlineScript) {
+            try {
+              const runAnimation = new Function('container', inlineScript);
+              runAnimation(container);
+            } catch (err) {
+              console.error('Error running Three.js script:', err);
+            }
+          }
+        }
+      }
+      customElements.define('threejs-scene', ThreeJSScene);
+    }
+  </script>
+</body></html>
