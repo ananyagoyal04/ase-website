@@ -3,6 +3,8 @@ import { Link, NavLink, Outlet, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import Lenis from 'lenis';
 import { siteContent } from '../data/content';
+import { BackgroundVideo } from './BackgroundVideo';
+import { Icon } from './Icon';
 import { ScrollProgress } from './ScrollProgress';
 
 export function Layout() {
@@ -73,7 +75,10 @@ export function Layout() {
   }, [mobileMenuOpen]);
 
   return (
-    <div className="min-h-dvh flex flex-col bg-[#07090C] text-[#F5F6F8]">
+    <div className="relative min-h-dvh flex flex-col bg-transparent text-[#F5F6F8]">
+      {/* Persistent Global Eagle Background Video (mounted once outside routes) */}
+      <BackgroundVideo />
+
       {/* Skip to content for keyboard users */}
       <a
         href="#main-content"
@@ -83,21 +88,21 @@ export function Layout() {
       </a>
 
       {/* Fixed Header + Scroll Progress */}
-      <header className="fixed top-0 inset-x-0 z-50 bg-[#07090C]/92 border-b border-[#C5CBD3]/15">
+      <header className="fixed top-0 inset-x-0 z-50 bg-[#07090C]/85 border-b border-[#C5CBD3]/20">
         <div className="ase-container h-16 flex items-center justify-between gap-4">
           <Link
             to="/"
             className="flex items-center gap-3 group focus-visible:outline-none"
             aria-label="ASE NMIT Bengaluru Home"
           >
-            <span className="inline-flex h-8 w-8 items-center justify-center rounded border border-[#C5CBD3]/30 bg-[#111419] font-mono text-xs font-semibold tracking-wider text-[#F5F6F8] group-hover:border-[#C5CBD3]/60 transition-colors">
+            <span className="inline-flex h-8 w-8 items-center justify-center rounded border border-[#C5CBD3]/35 bg-[#111419]/85 text-xs font-bold tracking-wider text-[#F5F6F8] group-hover:border-[#C5CBD3]/65 transition-colors">
               ASE
             </span>
             <div className="flex flex-col leading-none">
-              <span className="font-display text-sm font-semibold tracking-tight text-[#F5F6F8]">
+              <span className="font-display text-sm font-bold tracking-tight text-[#F5F6F8]">
                 ASE · NMIT
               </span>
-              <span className="font-mono text-[10px] tracking-[0.1em] text-[#8E929B] uppercase">
+              <span className="text-[10px] tracking-[0.12em] text-[#C5CBD3] uppercase">
                 Bengaluru
               </span>
             </div>
@@ -138,10 +143,10 @@ export function Layout() {
           <div className="flex items-center gap-3">
             <Link
               to="/collaborate"
-              className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded text-xs font-mono tracking-wider uppercase bg-[#C8102E] text-[#F5F6F8] hover:bg-[#A80D26] transition-colors"
+              className="hidden sm:inline-flex items-center gap-2 px-4 py-2 rounded type-label bg-[#C8102E] text-[#F5F6F8] hover:bg-[#A80D26] transition-colors"
             >
-              <span className="h-1.5 w-1.5 rounded-full bg-[#F5F6F8]" aria-hidden="true" />
-              Partner
+              <Icon name="handshake" className="w-3.5 h-3.5 text-[#F5F6F8]" />
+              <span>Partner</span>
             </Link>
 
             <button
@@ -154,31 +159,9 @@ export function Layout() {
               aria-expanded={mobileMenuOpen}
               aria-controls="mobile-nav-drawer"
               aria-label={mobileMenuOpen ? 'Close navigation menu' : 'Open navigation menu'}
-              className="lg:hidden inline-flex items-center justify-center h-10 w-10 rounded border border-[#C5CBD3]/25 bg-[#111419] text-[#F5F6F8] hover:border-[#C5CBD3]/50 transition-colors"
+              className="lg:hidden inline-flex items-center justify-center h-10 w-10 rounded border border-[#C5CBD3]/25 bg-[#111419]/85 text-[#C5CBD3] hover:text-[#C8102E] hover:border-[#C5CBD3]/55 transition-colors"
             >
-              <svg
-                width="18"
-                height="18"
-                viewBox="0 0 18 18"
-                fill="none"
-                aria-hidden="true"
-              >
-                {mobileMenuOpen ? (
-                  <path
-                    d="M4 4L14 14M14 4L4 14"
-                    stroke="currentColor"
-                    strokeWidth="1.6"
-                    strokeLinecap="round"
-                  />
-                ) : (
-                  <path
-                    d="M2.5 5H15.5M2.5 9H15.5M2.5 13H15.5"
-                    stroke="currentColor"
-                    strokeWidth="1.6"
-                    strokeLinecap="round"
-                  />
-                )}
-              </svg>
+              <Icon name={mobileMenuOpen ? 'x' : 'menu'} className="w-5 h-5" />
             </button>
           </div>
         </div>
@@ -249,30 +232,30 @@ export function Layout() {
       </main>
 
       {/* Footer */}
-      <footer className="border-t border-[#C5CBD3]/15 bg-[#07090C]">
+      <footer className="border-t border-[#C5CBD3]/20 bg-[#07090C]/80">
         <div className="ase-container py-14">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-10">
             <div className="md:col-span-5 space-y-4">
               <div className="flex items-center gap-2.5">
                 <span className="h-2 w-2 rounded-full bg-[#C8102E]" aria-hidden="true" />
-                <span className="font-display text-base font-semibold tracking-tight text-[#F5F6F8]">
+                <span className="font-display text-base font-bold tracking-tight text-[#F5F6F8]">
                   {siteContent.brand.fullName}
                 </span>
               </div>
-              <p className="type-body text-[#8E929B] max-w-sm">
-                {siteContent.brand.tagline}
+              <p className="type-body text-[#C5CBD3] max-w-sm">
+                We imagine. We <span className="font-script-accent text-[#F5F6F8]">engineer</span>. We build what&apos;s next.
               </p>
-              <p className="type-mono text-[#8E929B]">{siteContent.brand.location}</p>
+              <p className="type-label text-[#C5CBD3]/80">{siteContent.brand.location}</p>
             </div>
 
             <div className="md:col-span-4 space-y-3">
-              <h2 className="type-mono text-[#C5CBD3]">Navigation</h2>
+              <h2 className="type-label text-[#C5CBD3]">Navigation</h2>
               <ul className="grid grid-cols-2 gap-x-6 gap-y-2 text-sm">
                 {siteContent.navigation.map((item) => (
                   <li key={item.to}>
                     <Link
                       to={item.to}
-                      className="text-[#8E929B] hover:text-[#F5F6F8] transition-colors"
+                      className="text-[#C5CBD3]/85 hover:text-[#F5F6F8] transition-colors"
                     >
                       {item.label}
                     </Link>
@@ -282,38 +265,42 @@ export function Layout() {
             </div>
 
             <div className="md:col-span-3 space-y-3">
-              <h2 className="type-mono text-[#C5CBD3]">Connect</h2>
-              <ul className="space-y-2 text-sm">
+              <h2 className="type-label text-[#C5CBD3]">Connect</h2>
+              <div className="flex items-center gap-3 pt-1">
                 {siteContent.contact.socials.map((social) => (
-                  <li key={social.label}>
-                    <a
-                      href={social.url}
-                      target="_blank"
-                      rel="noreferrer"
-                      className="inline-flex items-center gap-1.5 text-[#8E929B] hover:text-[#F5F6F8] transition-colors"
-                    >
-                      <span>{social.label}</span>
-                      <span aria-hidden="true" className="text-xs">
-                        ↗
-                      </span>
-                    </a>
-                  </li>
-                ))}
-                <li>
                   <a
-                    href={`mailto:${siteContent.contact.email}`}
-                    className="text-[#8E929B] hover:text-[#F5F6F8] transition-colors"
+                    key={social.label}
+                    href={social.url}
+                    target="_blank"
+                    rel="noreferrer"
+                    aria-label={social.label}
+                    title={social.label}
+                    className="h-10 w-10 rounded border border-[#C5CBD3]/25 bg-[#111419]/80 text-[#C5CBD3] hover:text-[#C8102E] hover:border-[#C8102E]/70 inline-flex items-center justify-center transition-colors"
                   >
-                    {siteContent.contact.email}
+                    <Icon name={social.icon} className="w-4 h-4" />
                   </a>
-                </li>
-              </ul>
+                ))}
+                <a
+                  href={`mailto:${siteContent.contact.email}`}
+                  aria-label={`Email ${siteContent.contact.email}`}
+                  title={siteContent.contact.email}
+                  className="h-10 w-10 rounded border border-[#C5CBD3]/25 bg-[#111419]/80 text-[#C5CBD3] hover:text-[#C8102E] hover:border-[#C8102E]/70 inline-flex items-center justify-center transition-colors"
+                >
+                  <Icon name="mail" className="w-4 h-4" />
+                </a>
+              </div>
+              <a
+                href={`mailto:${siteContent.contact.email}`}
+                className="inline-block text-sm text-[#C5CBD3]/85 hover:text-[#F5F6F8] transition-colors"
+              >
+                {siteContent.contact.email}
+              </a>
             </div>
           </div>
 
           <div className="hairline-titanium my-10" />
 
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs text-[#8E929B] font-mono">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 text-xs text-[#C5CBD3]/80 uppercase tracking-[0.08em]">
             <span>{siteContent.brand.copyright}</span>
             <span>NMIT · BENGALURU</span>
           </div>

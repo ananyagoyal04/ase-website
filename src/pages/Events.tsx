@@ -1,12 +1,13 @@
 import { useMemo, useState } from 'react';
 import { AnimatePresence, motion, useReducedMotion } from 'motion/react';
 import { siteContent } from '../data/content';
+import { Icon } from '../components/Icon';
 import { Reveal } from '../components/Reveal';
 
 type EventFilter = 'all' | 'upcoming' | 'past';
 
 export default function Events() {
-  const { kicker, headline, subtitle, items } = siteContent.events;
+  const { kicker, subtitle, items } = siteContent.events;
   const [filter, setFilter] = useState<EventFilter>('all');
   const [expandedId, setExpandedId] = useState<string | null>(items[0]?.id ?? null);
   const prefersReducedMotion = useReducedMotion();
@@ -21,17 +22,19 @@ export default function Events() {
   };
 
   return (
-    <div className="bg-[#07090C]">
+    <div className="bg-transparent">
       {/* Page Header */}
-      <section className="py-16 md:py-24 border-b border-[#C5CBD3]/15">
+      <section className="py-16 md:py-24 border-b border-[#C5CBD3]/20">
         <div className="ase-container">
           <Reveal from="left" className="max-w-3xl space-y-5">
             <div className="flex items-center gap-2.5">
               <span className="h-1.5 w-1.5 rounded-full bg-[#C8102E]" aria-hidden="true" />
-              <span className="type-mono text-[#C5CBD3]">{kicker}</span>
+              <span className="type-label text-[#C5CBD3]">{kicker}</span>
             </div>
-            <h1 className="type-h1 text-[#F5F6F8]">{headline}</h1>
-            <p className="type-body-lg text-[#8E929B]">{subtitle}</p>
+            <h1 className="type-h1 text-[#F5F6F8]">
+              Sprints, talks, and <span className="font-script-accent text-[#C8102E]">flagship</span> builds.
+            </h1>
+            <p className="type-body-lg text-[#C5CBD3]">{subtitle}</p>
           </Reveal>
         </div>
       </section>
@@ -50,10 +53,10 @@ export default function Events() {
                     aria-pressed={isActive}
                     onClick={() => setFilter(tab)}
                     className={[
-                      'px-4 py-2 rounded font-mono text-xs uppercase tracking-wider border transition-colors',
+                      'px-4 py-2 rounded type-label border transition-colors',
                       isActive
                         ? 'bg-[#C8102E] border-[#C8102E] text-[#F5F6F8]'
-                        : 'bg-[#111419] border-[#C5CBD3]/20 text-[#8E929B] hover:text-[#F5F6F8] hover:border-[#C5CBD3]/50',
+                        : 'bg-[#111419]/80 border-[#C5CBD3]/25 text-[#C5CBD3] hover:text-[#F5F6F8] hover:border-[#C5CBD3]/60',
                     ].join(' ')}
                   >
                     {tab}
@@ -61,13 +64,13 @@ export default function Events() {
                 );
               })}
             </div>
-            <span className="type-mono text-[#8E929B]">
+            <span className="type-label text-[#C5CBD3]/80">
               {visibleEvents.length} {visibleEvents.length === 1 ? 'EVENT' : 'EVENTS'}
             </span>
           </Reveal>
 
           {/* Timeline Rail */}
-          <div className="relative pl-6 sm:pl-9 border-l border-[#C5CBD3]/20 space-y-6">
+          <div className="relative pl-6 sm:pl-9 border-l border-[#C5CBD3]/25 space-y-6">
             {visibleEvents.map((event, idx) => {
               const isExpanded = expandedId === event.id;
               const isUpcoming = event.status === 'upcoming';
@@ -96,31 +99,34 @@ export default function Events() {
                         aria-expanded={isExpanded}
                         aria-controls={`event-panel-${event.id}`}
                         onClick={() => toggleExpand(event.id)}
-                        className="w-full p-6 md:p-7 text-left flex flex-col sm:flex-row sm:items-center justify-between gap-4"
+                        className="w-full p-6 md:p-7 text-left flex flex-col sm:flex-row sm:items-center justify-between gap-4 group"
                       >
                         <div className="space-y-2">
                           <div className="flex flex-wrap items-center gap-2.5">
                             <span
                               className={[
-                                'px-2.5 py-0.5 rounded border font-mono text-[10px] uppercase tracking-wider',
+                                'px-2.5 py-0.5 rounded border type-label',
                                 isUpcoming
                                   ? 'border-[#C8102E]/60 bg-[#C8102E]/15 text-[#F5F6F8]'
-                                  : 'border-[#C5CBD3]/20 bg-[#07090C] text-[#8E929B]',
+                                  : 'border-[#C5CBD3]/20 bg-[#07090C]/75 text-[#C5CBD3]',
                               ].join(' ')}
                             >
                               {event.category}
                             </span>
-                            <span className="type-mono text-[#8E929B]">{event.dateLabel}</span>
+                            <span className="inline-flex items-center gap-1.5 type-label text-[#C5CBD3]/80">
+                              <Icon name="calendar" className="w-3.5 h-3.5 text-[#C5CBD3]" />
+                              <span>{event.dateLabel}</span>
+                            </span>
                           </div>
                           <h2 className="type-h3 text-[#F5F6F8]">{event.title}</h2>
-                          <p className="type-body text-[#8E929B]">{event.summary}</p>
+                          <p className="type-body text-[#C5CBD3]/85">{event.summary}</p>
                         </div>
 
                         <span
                           aria-hidden="true"
-                          className="shrink-0 self-start sm:self-center h-9 w-9 rounded border border-[#C5CBD3]/20 bg-[#07090C] flex items-center justify-center font-mono text-sm text-[#C5CBD3]"
+                          className="shrink-0 self-start sm:self-center h-9 w-9 rounded border border-[#C5CBD3]/25 bg-[#07090C]/75 flex items-center justify-center text-[#C5CBD3] group-hover:text-[#C8102E] transition-colors"
                         >
-                          {isExpanded ? '−' : '+'}
+                          <Icon name={isExpanded ? 'minus' : 'plus'} className="w-4 h-4" />
                         </span>
                       </button>
 
@@ -146,10 +152,13 @@ export default function Events() {
                             transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
                             className="overflow-hidden"
                           >
-                            <div className="px-6 md:px-7 pb-6 md:pb-7 pt-4 border-t border-[#C5CBD3]/12 space-y-4">
+                            <div className="px-6 md:px-7 pb-6 md:pb-7 pt-4 border-t border-[#C5CBD3]/15 space-y-4">
                               <p className="type-body text-[#C5CBD3]">{event.details}</p>
-                              <div className="flex flex-wrap items-center gap-4 text-xs font-mono text-[#8E929B]">
-                                <span>VENUE // {event.location}</span>
+                              <div className="flex flex-wrap items-center gap-5 type-label text-[#C5CBD3]/80">
+                                <span className="inline-flex items-center gap-1.5">
+                                  <Icon name="map-pin" className="w-3.5 h-3.5 text-[#C5CBD3]" />
+                                  <span>{event.location}</span>
+                                </span>
                                 <span>STATUS // {event.status.toUpperCase()}</span>
                               </div>
                             </div>

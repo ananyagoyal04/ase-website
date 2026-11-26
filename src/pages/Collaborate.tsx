@@ -1,11 +1,11 @@
 import { useState, type FormEvent } from 'react';
 import { siteContent } from '../data/content';
+import { Icon } from '../components/Icon';
 import { Reveal } from '../components/Reveal';
 
 export default function Collaborate() {
   const {
     kicker,
-    headline,
     subtitle,
     waysToPartner,
     studentValue,
@@ -41,27 +41,31 @@ export default function Collaborate() {
   };
 
   return (
-    <div className="bg-[#07090C]">
+    <div className="bg-transparent">
       {/* Page Header */}
-      <section className="py-16 md:py-24 border-b border-[#C5CBD3]/15">
+      <section className="py-16 md:py-24 border-b border-[#C5CBD3]/20">
         <div className="ase-container">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 items-end">
             <Reveal from="left" className="lg:col-span-8 space-y-5">
               <div className="flex items-center gap-2.5">
                 <span className="h-1.5 w-1.5 rounded-full bg-[#C8102E]" aria-hidden="true" />
-                <span className="type-mono text-[#C5CBD3]">{kicker}</span>
+                <span className="type-label text-[#C5CBD3]">{kicker}</span>
               </div>
-              <h1 className="type-h1 text-[#F5F6F8]">{headline}</h1>
-              <p className="type-body-lg text-[#8E929B] max-w-2xl">{subtitle}</p>
+              <h1 className="type-h1 text-[#F5F6F8]">
+                Partner with high-velocity student{' '}
+                <span className="font-script-accent text-[#C8102E]">engineers</span>.
+              </h1>
+              <p className="type-body-lg text-[#C5CBD3] max-w-2xl">{subtitle}</p>
             </Reveal>
 
             <Reveal from="right" delay={0.08} className="lg:col-span-4 lg:flex lg:justify-end">
               <a
                 href={directMailto}
-                className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded text-sm font-medium bg-[#C8102E] text-[#F5F6F8] hover:bg-[#A80D26] transition-colors"
+                className="inline-flex items-center gap-2.5 px-6 py-3.5 rounded text-sm font-bold bg-[#C8102E] text-[#F5F6F8] hover:bg-[#A80D26] transition-colors"
               >
+                <Icon name="handshake" className="w-4 h-4 text-[#F5F6F8]" />
                 <span>Sponsor enquiry</span>
-                <span aria-hidden="true">↗</span>
+                <Icon name="arrow-up-right" className="w-4 h-4 text-[#F5F6F8]" />
               </a>
             </Reveal>
           </div>
@@ -69,12 +73,12 @@ export default function Collaborate() {
       </section>
 
       {/* Ways to Partner */}
-      <section className="py-16 md:py-24 surface-brushed border-b border-[#C5CBD3]/15">
+      <section className="py-16 md:py-24 surface-brushed border-b border-[#C5CBD3]/20">
         <div className="ase-container space-y-12">
           <Reveal from="right" className="max-w-2xl space-y-3">
             <div className="flex items-center gap-2.5">
               <span className="h-1.5 w-1.5 rounded-full bg-[#C8102E]" aria-hidden="true" />
-              <span className="type-mono text-[#C5CBD3]">// PARTNERSHIP TRACKS</span>
+              <span className="type-label text-[#C5CBD3]">// PARTNERSHIP TRACKS</span>
             </div>
             <h2 className="type-h2 text-[#F5F6F8]">Ways to collaborate with ASE</h2>
           </Reveal>
@@ -89,9 +93,9 @@ export default function Collaborate() {
               >
                 <article className="metal-card rounded-lg p-6 md:p-7 h-full flex flex-col justify-between gap-6">
                   <div className="space-y-4">
-                    <span className="type-mono text-[#8E929B]">[ {item.code} ]</span>
+                    <span className="type-label text-[#C5CBD3]/80">[ {item.code} ]</span>
                     <h3 className="type-h3 text-[#F5F6F8]">{item.title}</h3>
-                    <p className="type-body text-[#8E929B]">{item.description}</p>
+                    <p className="type-body text-[#C5CBD3]/85">{item.description}</p>
                   </div>
                   <div className="hairline-titanium" />
                 </article>
@@ -109,7 +113,7 @@ export default function Collaborate() {
               <div className="space-y-3">
                 <div className="flex items-center gap-2.5">
                   <span className="h-1.5 w-1.5 rounded-full bg-[#C8102E]" aria-hidden="true" />
-                  <span className="type-mono text-[#C5CBD3]">// WHAT STUDENTS OFFER</span>
+                  <span className="type-label text-[#C5CBD3]">// WHAT STUDENTS OFFER</span>
                 </div>
                 <h2 className="type-h2 text-[#F5F6F8]">Execution, visibility, and talent</h2>
               </div>
@@ -118,9 +122,12 @@ export default function Collaborate() {
                 {studentValue.map((point, idx) => (
                   <li
                     key={point}
-                    className="p-4 rounded border border-[#C5CBD3]/18 bg-[#111419] flex items-start gap-3"
+                    className="p-4 rounded border border-[#C5CBD3]/20 bg-[#111419]/80 flex items-start gap-3"
                   >
-                    <span className="type-mono text-[#C8102E] pt-0.5">0{idx + 1}</span>
+                    <span className="type-label text-[#C8102E] pt-0.5 inline-flex items-center gap-1.5 shrink-0">
+                      <Icon name="check" className="w-4 h-4 text-[#C5CBD3]" />
+                      <span>0{idx + 1}</span>
+                    </span>
                     <span className="type-body text-[#C5CBD3]">{point}</span>
                   </li>
                 ))}
@@ -133,16 +140,19 @@ export default function Collaborate() {
                 className="metal-card rounded-lg p-6 md:p-8 space-y-6"
                 aria-labelledby="sponsor-form-heading"
               >
-                <div className="flex items-center justify-between border-b border-[#C5CBD3]/15 pb-4">
+                <div className="flex flex-wrap items-center justify-between gap-2 border-b border-[#C5CBD3]/15 pb-4">
                   <h2 id="sponsor-form-heading" className="type-h3 text-[#F5F6F8]">
                     Sponsor Enquiry
                   </h2>
-                  <span className="type-mono text-[#8E929B]">{enquiryEmail}</span>
+                  <span className="inline-flex items-center gap-1.5 type-label text-[#C5CBD3]/80">
+                    <Icon name="mail" className="w-3.5 h-3.5 text-[#C5CBD3]" />
+                    <span>{enquiryEmail}</span>
+                  </span>
                 </div>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div className="space-y-2">
-                    <label htmlFor="collab-org" className="type-mono text-[#C5CBD3] block">
+                    <label htmlFor="collab-org" className="type-label text-[#C5CBD3] block">
                       Organisation
                     </label>
                     <input
@@ -152,12 +162,12 @@ export default function Collaborate() {
                       value={orgName}
                       onChange={(e) => setOrgName(e.target.value)}
                       placeholder="Company or community name"
-                      className="w-full px-3.5 py-2.5 rounded border border-[#C5CBD3]/25 bg-[#07090C] text-sm text-[#F5F6F8] placeholder:text-[#8E929B]"
+                      className="w-full px-3.5 py-2.5 rounded border border-[#C5CBD3]/25 bg-[#07090C]/75 text-base text-[#F5F6F8] placeholder:text-[#C5CBD3]/55"
                     />
                   </div>
 
                   <div className="space-y-2">
-                    <label htmlFor="collab-email" className="type-mono text-[#C5CBD3] block">
+                    <label htmlFor="collab-email" className="type-label text-[#C5CBD3] block">
                       Work Email
                     </label>
                     <input
@@ -167,20 +177,20 @@ export default function Collaborate() {
                       value={contactEmail}
                       onChange={(e) => setContactEmail(e.target.value)}
                       placeholder="you@organisation.com"
-                      className="w-full px-3.5 py-2.5 rounded border border-[#C5CBD3]/25 bg-[#07090C] text-sm text-[#F5F6F8] placeholder:text-[#8E929B]"
+                      className="w-full px-3.5 py-2.5 rounded border border-[#C5CBD3]/25 bg-[#07090C]/75 text-base text-[#F5F6F8] placeholder:text-[#C5CBD3]/55"
                     />
                   </div>
                 </div>
 
                 <div className="space-y-2">
-                  <label htmlFor="collab-track" className="type-mono text-[#C5CBD3] block">
+                  <label htmlFor="collab-track" className="type-label text-[#C5CBD3] block">
                     Collaboration Track
                   </label>
                   <select
                     id="collab-track"
                     value={track}
                     onChange={(e) => setTrack(e.target.value)}
-                    className="w-full px-3.5 py-2.5 rounded border border-[#C5CBD3]/25 bg-[#07090C] text-sm text-[#F5F6F8]"
+                    className="w-full px-3.5 py-2.5 rounded border border-[#C5CBD3]/25 bg-[#07090C]/90 text-base text-[#F5F6F8]"
                   >
                     {waysToPartner.map((item) => (
                       <option key={item.code} value={item.title}>
@@ -191,7 +201,7 @@ export default function Collaborate() {
                 </div>
 
                 <div className="space-y-2">
-                  <label htmlFor="collab-notes" className="type-mono text-[#C5CBD3] block">
+                  <label htmlFor="collab-notes" className="type-label text-[#C5CBD3] block">
                     Brief / Proposal
                   </label>
                   <textarea
@@ -201,30 +211,31 @@ export default function Collaborate() {
                     value={notes}
                     onChange={(e) => setNotes(e.target.value)}
                     placeholder="Share your goals, timeline, or event sponsorship focus."
-                    className="w-full px-3.5 py-2.5 rounded border border-[#C5CBD3]/25 bg-[#07090C] text-sm text-[#F5F6F8] placeholder:text-[#8E929B]"
+                    className="w-full px-3.5 py-2.5 rounded border border-[#C5CBD3]/25 bg-[#07090C]/75 text-base text-[#F5F6F8] placeholder:text-[#C5CBD3]/55"
                   />
                 </div>
 
                 <div className="flex flex-wrap items-center justify-between gap-4 pt-2">
                   <button
                     type="submit"
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded text-sm font-medium bg-[#C8102E] text-[#F5F6F8] hover:bg-[#A80D26] transition-colors"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded text-sm font-bold bg-[#C8102E] text-[#F5F6F8] hover:bg-[#A80D26] transition-colors"
                   >
                     <span>Send Sponsor Enquiry</span>
-                    <span aria-hidden="true">→</span>
+                    <Icon name="arrow-right" className="w-4 h-4 text-[#F5F6F8]" />
                   </button>
                   <a
                     href={directMailto}
-                    className="font-mono text-xs uppercase tracking-wider text-[#C5CBD3] hover:text-[#F5F6F8] transition-colors"
+                    className="inline-flex items-center gap-1.5 type-label text-[#C5CBD3] hover:text-[#C8102E] transition-colors"
                   >
-                    Open Direct Mailto ↗
+                    <span>Open Direct Mailto</span>
+                    <Icon name="arrow-up-right" className="w-3.5 h-3.5" />
                   </a>
                 </div>
 
                 {statusMessage && (
                   <p
                     role="status"
-                    className="p-3 rounded border border-[#C5CBD3]/25 bg-[#07090C] text-xs text-[#C5CBD3]"
+                    className="p-3 rounded border border-[#C5CBD3]/25 bg-[#07090C]/75 text-sm text-[#C5CBD3]"
                   >
                     {statusMessage}
                   </p>

@@ -1,6 +1,7 @@
 import { useCallback, useRef, useState } from 'react';
 import { motion, useReducedMotion } from 'motion/react';
 import { siteContent, type DomainItem } from '../../data/content';
+import { Icon, resolveToolIcon } from '../Icon';
 import { DomainIcon } from './DomainIcon';
 
 interface SingularityDropProps {
@@ -154,13 +155,13 @@ export function SingularityDrop({
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <span className="h-1.5 w-1.5 rounded-full bg-[#C8102E]" aria-hidden="true" />
-            <span className="type-mono text-[#C5CBD3]">INTERACTION 02 // SINGULARITY</span>
+            <span className="type-label text-[#C5CBD3]">INTERACTION 02 // SINGULARITY</span>
           </div>
-          <p className="text-sm text-[#8E929B]">
+          <p className="text-sm text-[#C5CBD3]/85">
             Drag any domain node into the core—or tap / press Enter—to collapse and inspect its blueprint.
           </p>
         </div>
-        <span className="type-mono text-[#8E929B] shrink-0">
+        <span className="type-label text-[#C5CBD3]/80 shrink-0">
           {nearCore ? 'EVENT HORIZON LOCKED' : 'GRAVITY WELL READY'}
         </span>
       </div>
@@ -168,7 +169,7 @@ export function SingularityDrop({
       {/* Bounded Singularity Arena */}
       <div
         ref={arenaRef}
-        className="relative h-[440px] sm:h-[480px] rounded border border-[#C5CBD3]/15 bg-[#07090C] overflow-hidden select-none"
+        className="relative h-[440px] sm:h-[480px] rounded border border-[#C5CBD3]/15 bg-[#07090C]/70 overflow-hidden select-none"
       >
         {/* Subtle radial horizon markers */}
         <div
@@ -227,10 +228,10 @@ export function SingularityDrop({
             transition={{ type: 'spring', stiffness: 280, damping: 20 }}
             className="absolute h-24 w-24 rounded-full bg-[#040507] border border-[#C5CBD3]/25 flex flex-col items-center justify-center text-center"
           >
-            <span className="font-mono text-[10px] tracking-[0.14em] text-[#C5CBD3] uppercase">
+            <span className="type-label text-[#C5CBD3]">
               CORE
             </span>
-            <span className="font-mono text-[9px] text-[#8E929B] mt-0.5">
+            <span className="text-[10px] tracking-[0.08em] uppercase text-[#C5CBD3]/75 mt-0.5">
               {nearCore ? 'DROP' : 'DRAG / TAP'}
             </span>
           </motion.div>
@@ -306,17 +307,26 @@ export function SingularityDrop({
                   : { type: 'spring', stiffness: 260, damping: 24 }
               }
               className={[
-                'absolute z-10 -translate-x-0 -translate-y-0 group flex flex-col items-center gap-1.5 p-2.5 sm:px-3.5 sm:py-2.5 rounded-lg border bg-[#111419] transition-colors cursor-grab active:cursor-grabbing',
+                'absolute z-10 -translate-x-0 -translate-y-0 group flex flex-col items-center gap-1.5 p-2.5 sm:px-3.5 sm:py-2.5 rounded-lg border bg-[#111419]/85 transition-colors cursor-grab active:cursor-grabbing',
                 isDragging
                   ? 'z-20 border-[#C8102E] text-[#F5F6F8]'
                   : 'border-[#C5CBD3]/25 text-[#F5F6F8] hover:border-[#C5CBD3]/60',
               ].join(' ')}
             >
-              <span className="h-9 w-9 rounded-full border border-[#C5CBD3]/25 bg-[#07090C] flex items-center justify-center text-[#F5F6F8] group-hover:border-[#C8102E]/70 transition-colors">
+              <span className="h-9 w-9 rounded-full border border-[#C5CBD3]/25 bg-[#07090C]/80 flex items-center justify-center text-[#C5CBD3] group-hover:text-[#C8102E] group-hover:border-[#C8102E]/70 transition-colors">
                 <DomainIcon domainId={domain.id} className="w-4 h-4" />
               </span>
-              <span className="font-mono text-[10px] tracking-wider uppercase text-[#C5CBD3] whitespace-nowrap">
+              <span className="type-label text-[#C5CBD3] whitespace-nowrap">
                 {domain.shortName}
+              </span>
+              <span className="hidden sm:inline-flex items-center gap-1 text-[10px] text-[#C5CBD3]/75">
+                {domain.tools.slice(0, 2).map((tool) => (
+                  <Icon
+                    key={tool}
+                    name={resolveToolIcon(tool)}
+                    className="w-3 h-3 text-[#C5CBD3]/80 group-hover:text-[#C8102E] transition-colors"
+                  />
+                ))}
               </span>
             </motion.button>
           );

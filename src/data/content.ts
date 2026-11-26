@@ -1,3 +1,5 @@
+import type { IconName } from '../components/Icon';
+
 export interface NavItem {
   label: string;
   to: string;
@@ -11,6 +13,7 @@ export interface TeaserCard {
   summary: string;
   ctaLabel: string;
   to: string;
+  icon: IconName;
 }
 
 export interface DomainItem {
@@ -18,6 +21,7 @@ export interface DomainItem {
   code: string;
   name: string;
   shortName: string;
+  icon: IconName;
   tagline: string;
   description: string;
   skills: string[];
@@ -133,6 +137,7 @@ export const siteContent = {
           'Navigate the connected disciplines powering ASE—explore shared toolchains on the Domain Map or pull a track into the Singularity core.',
         ctaLabel: 'Explore Domains',
         to: '/domains',
+        icon: 'compass',
       },
       {
         id: 'projects',
@@ -143,6 +148,7 @@ export const siteContent = {
           'Inspect open builds, technical prototypes, and software systems engineered by ASE members. [PLACEHOLDER: Add project highlights]',
         ctaLabel: 'View Projects',
         to: '/projects',
+        icon: 'folder-git',
       },
       {
         id: 'collaborate',
@@ -153,6 +159,7 @@ export const siteContent = {
           'Partner with NMIT Bengaluru’s largest tech collective on workshops, problem statements, mentorship, and flagship technical events.',
         ctaLabel: 'Partner With Us',
         to: '/collaborate',
+        icon: 'handshake',
       },
     ] satisfies TeaserCard[],
   },
@@ -209,6 +216,7 @@ export const siteContent = {
         code: 'DOM-01',
         name: 'Systems & Backend Engineering',
         shortName: 'Systems',
+        icon: 'server',
         tagline: '[PLACEHOLDER: Distributed services, APIs, and reliability]',
         description:
           '[PLACEHOLDER: Describe the Systems & Backend track at ASE—APIs, databases, distributed architecture, and performance engineering.]',
@@ -222,6 +230,7 @@ export const siteContent = {
         code: 'DOM-02',
         name: 'Applied AI & Machine Learning',
         shortName: 'AI / ML',
+        icon: 'cpu',
         tagline: '[PLACEHOLDER: Model engineering, inference, and evaluation]',
         description:
           '[PLACEHOLDER: Describe the AI & ML track at ASE—applied models, RAG pipelines, computer vision, and reproducible experimentation.]',
@@ -235,6 +244,7 @@ export const siteContent = {
         code: 'DOM-03',
         name: 'Web & Product Engineering',
         shortName: 'Web & UI',
+        icon: 'globe',
         tagline: '[PLACEHOLDER: Precision interfaces and full-stack web apps]',
         description:
           '[PLACEHOLDER: Describe the Web & Product track—accessible design systems, interactive frontends, and resilient full-stack delivery.]',
@@ -248,6 +258,7 @@ export const siteContent = {
         code: 'DOM-04',
         name: 'Cloud & Infrastructure',
         shortName: 'Cloud / Ops',
+        icon: 'cloud',
         tagline: '[PLACEHOLDER: CI/CD automation, containers, and deployment]',
         description:
           '[PLACEHOLDER: Describe the Cloud & DevOps track—container orchestration, automated pipelines, and resilient deployment workflows.]',
@@ -261,6 +272,7 @@ export const siteContent = {
         code: 'DOM-05',
         name: 'Security & Embedded Systems',
         shortName: 'Security',
+        icon: 'shield',
         tagline: '[PLACEHOLDER: AppSec, hardware interfaces, and edge compute]',
         description:
           '[PLACEHOLDER: Describe Security & Embedded—threat modeling, firmware fundamentals, and hardware-software integration.]',
@@ -461,9 +473,9 @@ export const siteContent = {
     email: 'ase@example.edu',
     address: 'Department / Club Hub [PLACEHOLDER], NMIT, Yelahanka, Bengaluru 560064',
     socials: [
-      { label: 'GitHub [PLACEHOLDER]', url: 'https://github.com' },
-      { label: 'LinkedIn [PLACEHOLDER]', url: 'https://linkedin.com' },
-      { label: 'Instagram [PLACEHOLDER]', url: 'https://instagram.com' },
+      { label: 'GitHub', url: 'https://github.com', icon: 'github' as IconName },
+      { label: 'LinkedIn', url: 'https://linkedin.com', icon: 'linkedin' as IconName },
+      { label: 'Instagram', url: 'https://instagram.com', icon: 'instagram' as IconName },
     ],
   },
 } as const;

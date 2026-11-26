@@ -1,5 +1,6 @@
 import { useMemo, useState } from 'react';
 import { siteContent, type DomainItem } from '../../data/content';
+import { Icon, resolveToolIcon } from '../Icon';
 import { DomainIcon } from './DomainIcon';
 
 interface DomainMapProps {
@@ -43,19 +44,19 @@ export function DomainMap({ selectedDomainId, onSelectDomain }: DomainMapProps) 
         <div className="space-y-1">
           <div className="flex items-center gap-2">
             <span className="h-1.5 w-1.5 rounded-full bg-[#C8102E]" aria-hidden="true" />
-            <span className="type-mono text-[#C5CBD3]">INTERACTION 01 // DOMAIN MAP</span>
+            <span className="type-label text-[#C5CBD3]">INTERACTION 01 // DOMAIN MAP</span>
           </div>
-          <p className="text-sm text-[#8E929B]">
+          <p className="text-sm text-[#C5CBD3]/85">
             Hover or focus a node to trace shared tooling. Select any domain to inspect its stack.
           </p>
         </div>
-        <span className="type-mono text-[#8E929B] shrink-0">
+        <span className="type-label text-[#C5CBD3]/80 shrink-0">
           {items.length} NODES · {connections.length} LINKS
         </span>
       </div>
 
       {/* Desktop / Tablet SVG Constellation */}
-      <div className="hidden md:block relative rounded border border-[#C5CBD3]/15 bg-[#07090C] overflow-hidden">
+      <div className="hidden md:block relative rounded border border-[#C5CBD3]/15 bg-[#07090C]/70 overflow-hidden">
         <svg
           viewBox={`0 0 ${VIEWBOX_W} ${VIEWBOX_H}`}
           className="w-full h-auto block select-none"
@@ -131,10 +132,11 @@ export function DomainMap({ selectedDomainId, onSelectDomain }: DomainMapProps) 
                   <text
                     textAnchor="middle"
                     dominantBaseline="central"
-                    fill={isEdgeHighlighted ? '#F5F6F8' : '#8E929B'}
+                    fill={isEdgeHighlighted ? '#F5F6F8' : '#C5CBD3'}
                     fontSize="10"
-                    fontFamily="JetBrains Mono, monospace"
-                    letterSpacing="0.06em"
+                    fontFamily="Tinos, Times New Roman, serif"
+                    fontWeight="700"
+                    letterSpacing="0.07em"
                   >
                     {edge.marker.toUpperCase()}
                   </text>
@@ -192,13 +194,13 @@ export function DomainMap({ selectedDomainId, onSelectDomain }: DomainMapProps) 
 
                 {/* Code label */}
                 <text
-                  y="-6"
+                  y="-7"
                   textAnchor="middle"
-                  fill={isActive ? '#C8102E' : '#8E929B'}
+                  fill={isActive ? '#C8102E' : '#C5CBD3'}
                   fontSize="10"
-                  fontFamily="JetBrains Mono, monospace"
-                  fontWeight="600"
-                  letterSpacing="0.08em"
+                  fontFamily="Tinos, Times New Roman, serif"
+                  fontWeight="700"
+                  letterSpacing="0.09em"
                 >
                   {domain.code}
                 </text>
@@ -208,9 +210,9 @@ export function DomainMap({ selectedDomainId, onSelectDomain }: DomainMapProps) 
                   y="11"
                   textAnchor="middle"
                   fill="#F5F6F8"
-                  fontSize="12"
-                  fontFamily="Space Grotesk, sans-serif"
-                  fontWeight="600"
+                  fontSize="12.5"
+                  fontFamily="Playfair Display, Georgia, serif"
+                  fontWeight="700"
                 >
                   {domain.shortName}
                 </text>
@@ -218,6 +220,22 @@ export function DomainMap({ selectedDomainId, onSelectDomain }: DomainMapProps) 
             );
           })}
         </svg>
+
+        {/* Shared Tooling Legend with Brand Icons */}
+        <div className="px-5 py-3.5 border-t border-[#C5CBD3]/15 bg-[#111419]/80 flex flex-wrap items-center justify-between gap-3">
+          <span className="type-label text-[#C5CBD3]/80">SHARED TOOLING LINKS</span>
+          <div className="flex flex-wrap items-center gap-2">
+            {connections.map((link) => (
+              <span
+                key={`${link.from}-${link.to}-legend`}
+                className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded border border-[#C5CBD3]/20 bg-[#07090C]/75 text-xs text-[#C5CBD3]"
+              >
+                <Icon name={resolveToolIcon(link.marker)} className="w-3.5 h-3.5 text-[#C5CBD3]" />
+                <span>{link.marker}</span>
+              </span>
+            ))}
+          </div>
+        </div>
       </div>
 
       {/* Mobile Responsive Constellation List + Mini Topology */}
@@ -234,37 +252,38 @@ export function DomainMap({ selectedDomainId, onSelectDomain }: DomainMapProps) 
               type="button"
               onClick={() => onSelectDomain(domain)}
               className={[
-                'w-full text-left p-4 rounded border transition-colors flex flex-col gap-3',
+                'w-full text-left p-4 rounded border transition-colors flex flex-col gap-3 group',
                 isSelected
-                  ? 'border-[#C8102E] bg-[#171B22]'
-                  : 'border-[#C5CBD3]/20 bg-[#07090C] hover:border-[#C5CBD3]/45',
+                  ? 'border-[#C8102E] bg-[#171B22]/90'
+                  : 'border-[#C5CBD3]/20 bg-[#07090C]/75 hover:border-[#C5CBD3]/45',
               ].join(' ')}
             >
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
-                  <span className="h-9 w-9 rounded-full border border-[#C5CBD3]/30 bg-[#111419] flex items-center justify-center text-[#F5F6F8]">
+                  <span className="h-9 w-9 rounded-full border border-[#C5CBD3]/30 bg-[#111419]/85 flex items-center justify-center text-[#C5CBD3] group-hover:text-[#C8102E] transition-colors">
                     <DomainIcon domainId={domain.id} className="w-4 h-4" />
                   </span>
                   <div>
-                    <span className="type-mono text-[#8E929B] block">{domain.code}</span>
-                    <span className="font-display text-base font-semibold text-[#F5F6F8]">
+                    <span className="type-label text-[#C5CBD3]/80 block">{domain.code}</span>
+                    <span className="font-display text-base font-bold text-[#F5F6F8]">
                       {domain.name}
                     </span>
                   </div>
                 </div>
-                <span className="text-[#C8102E] text-sm" aria-hidden="true">
-                  →
-                </span>
+                <Icon
+                  name="arrow-right"
+                  className="w-4 h-4 text-[#C5CBD3] group-hover:text-[#C8102E] transition-colors"
+                />
               </div>
 
               <div className="flex flex-wrap items-center gap-1.5">
                 {links.map((link) => (
                   <span
                     key={`${link.from}-${link.to}`}
-                    className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded border border-[#C5CBD3]/15 bg-[#111419] font-mono text-[10px] uppercase tracking-wider text-[#8E929B]"
+                    className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded border border-[#C5CBD3]/15 bg-[#111419]/85 type-label text-[#C5CBD3]/85"
                   >
-                    <span className="inline-block h-1.5 w-1.5 rotate-45 bg-[#C5CBD3]/70" aria-hidden="true" />
-                    {link.marker}
+                    <Icon name={resolveToolIcon(link.marker)} className="w-3 h-3 text-[#C5CBD3]" />
+                    <span>{link.marker}</span>
                   </span>
                 ))}
               </div>
